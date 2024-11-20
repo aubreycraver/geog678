@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leaflet Tutorial 1</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+      integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+      crossorigin=""/>
+    
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+      integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+      crossorigin=""></script>
+
+    <style>
+      #mapid {
+        height: 500px; /* Opted to a larger fixed height */
+        width: 800px;  /* Included a fixed width */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mapid"></div>
+
+    <script>
+      // Setting up the map
+      var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(mymap);
+
+      // Creating a basic icon
+      var greenIcon = L.icon({
+        iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+        iconSize: [38, 95], 
+        shadowSize: [50, 64], 
+        iconAnchor: [22, 94], 
+        shadowAnchor: [4, 62],
+        popupAnchor: [-3, -76] 
+      });
+
+      // Using the basic icon for a marker
+      L.marker([51.5, -0.09], {icon: greenIcon}).addTo(mymap);
+
+      
+      var LeafIcon = L.Icon.extend({
+        options: {
+          shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png', 
+          iconSize: [38, 95],
+          shadowSize: [50, 64],
+          iconAnchor: [22, 94],
+          shadowAnchor: [4, 62],
+          popupAnchor: [-3, -76]
+        }
+      });
+
+      
+      var greenLeafIcon = new LeafIcon({iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png'}),
+          redLeafIcon = new LeafIcon({iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png'}),
+          orangeLeafIcon = new LeafIcon({iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-orange.png'});
+
+      
+      L.marker([51.5, -0.09], {icon: greenLeafIcon}).addTo(mymap).bindPopup("I am a green leaf.");
+      L.marker([51.495, -0.083], {icon: redLeafIcon}).addTo(mymap).bindPopup("I am a red leaf.");
+      L.marker([51.49, -0.1], {icon: orangeLeafIcon}).addTo(mymap).bindPopup("I am an orange leaf.");
+
+      // Geolocation
+      mymap.locate({setView: true, maxZoom: 16});
+    </script>
+  </body>
+</html>
